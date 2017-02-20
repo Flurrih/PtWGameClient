@@ -12,7 +12,7 @@ using Assets.Packets;
 public class GameClient : MonoBehaviour {
 
     public static Socket master;
-    public static string _name;
+    public static string userName;
     public static string token;
     public static int id;
 

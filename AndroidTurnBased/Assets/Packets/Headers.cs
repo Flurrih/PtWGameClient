@@ -9,12 +9,18 @@ namespace Assets.Packets
     {
         Login,
         Registration,
-        Connection
+        Connection,
+        Player
     }
 
     public enum LoginHeader : ushort
     {
         Authorization,
         NonAuthorization
+    }
+
+    public enum PlayerHeader : ushort
+    {
+        BasicData
     }
 }

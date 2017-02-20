@@ -38,6 +38,25 @@ namespace Assets.Packets
                         Debug.Log("Client ID: " + GameClient.id);
                     }
                     break;
+                case Headers.Player:
+                    {
+                        PlayerHeader playerHeader = (PlayerHeader)pr.ReadInt16();
+                        switch(playerHeader)
+                        {
+                            case PlayerHeader.BasicData:
+                                {
+                                    int id = pr.ReadInt16();
+                                    string userName = pr.ReadString();
+
+                                    GameClient.id = id;
+                                    GameClient.userName = userName;
+
+                                    Debug.Log("Player received id: " + GameClient.id + " and username: " + GameClient.userName);
+                                }
+                                break;
+                        }
+                    }
+                    break;
             }
         }
     }
