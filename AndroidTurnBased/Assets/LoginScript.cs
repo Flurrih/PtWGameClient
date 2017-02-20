@@ -21,8 +21,7 @@ public class LoginScript : MonoBehaviour {
     {
         PacketWriter pw = new PacketWriter();
         pw.Write((ushort)Headers.Login);
-        Debug.Log(GameClient.id);
-        pw.Write(GameClient.id);
+        pw.Write(GameClient.token);
         pw.Write(loginInput.text.ToString());
         pw.Write(passwordInput.text.ToString());
         GameClient.SendPacket(pw.GetBytes());
@@ -32,7 +31,7 @@ public class LoginScript : MonoBehaviour {
     {
         PacketWriter pw = new PacketWriter();
         pw.Write((ushort)Headers.Registration);
-        pw.Write(GameClient.id);
+        pw.Write(GameClient.token);
         pw.Write(loginInput.text.ToString());
         pw.Write(passwordInput.text.ToString());
         GameClient.SendPacket(pw.GetBytes());

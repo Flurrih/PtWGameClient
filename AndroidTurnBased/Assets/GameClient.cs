@@ -13,7 +13,8 @@ public class GameClient : MonoBehaviour {
 
     public static Socket master;
     public static string _name;
-    public static string id;
+    public static string token;
+    public static int id;
 
     private static IPEndPoint ip;
 

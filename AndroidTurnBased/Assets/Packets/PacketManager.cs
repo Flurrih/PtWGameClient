@@ -33,8 +33,8 @@ namespace Assets.Packets
                     break;
                 case Headers.Connection:
                     {
-                        string id = pr.ReadString();
-                        GameClient.id = id;
+                        string token = pr.ReadString();
+                        GameClient.token = token;
                         Debug.Log("Client ID: " + GameClient.id);
                     }
                     break;
