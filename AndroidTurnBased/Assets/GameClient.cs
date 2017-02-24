@@ -8,95 +8,28 @@ using System;
 using ServerData;
 using Assets;
 using Assets.Packets;
+using System.Collections.Generic;
+using Assets.Networking;
 
 public class GameClient : MonoBehaviour {
 
-    public static Socket master;
-    public static string userName;
+    public static ClientSocket client;
     public static string token;
-    public static int id;
-
-    private static IPEndPoint ip;
+    public static PlayerData player;
+    public static LoginScript loginScript { get; private set;}
 
     // Use this for initialization
     void Start () {
-        DontDestroyOnLoad(transform.gameObject);
-
-        master = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        ip = new IPEndPoint(IPAddress.Parse(GetIPAddress()), 8888);
-        try
-        {
-            master.Connect(ip);
-            if (master.Connected)
-            {
-                Debug.Log("Conncted to the server");
-            }
-            master.Blocking = false;
-        }
-        catch
-        {
-            Debug.Log("Could not connect to the host");
-        }
-        
+        client = new ClientSocket();
+        client.Connect("192.168.0.105", 6556);
     }
     void Update()
     {
-        ReceivePacket();
+    }
+
+    public static void SetLoginScript(LoginScript loginS)//TO RECODE!!!!!!
+    {
+        loginScript = loginS;
     }
     
-
-    public static void ConnectToServer()
-    {
-        if (master.Connected != true)
-        {
-            try
-            {
-                master.Connect(ip);
-                if (master.Connected)
-                    Debug.Log("Conncted to the server");
-            }
-            catch
-            {
-                Debug.Log("Could not connect to the host");
-            }
-        }
-    }
-
-    public static void SendPacket(byte[] data)
-    {
-        if(master.Connected)
-            master.Send(data);
-    }
-
-    public void ReceivePacket()
-    {
-        byte[] Buffer;
-        int readBytes;
-
-        try
-        {
-                Buffer = new byte[master.SendBufferSize];
-                readBytes = master.Receive(Buffer);
-
-                if (readBytes > 0)
-                {
-                    PacketManager.Unpack(Buffer);
-                }
-        }
-        catch { }
-
-    }
-
-    public static string GetIPAddress()
-    {
-        IPAddress[] ips = Dns.GetHostAddresses(Dns.GetHostName());
-
-        foreach (IPAddress i in ips)
-        {
-            if (i.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                return i.ToString();
-        }
-
-        return "127.0.0.1";
-    }
 }
